@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Budget Tracker </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <h1>Personal Budget Tracker</h1>
+
+    <div class="summary">
+        <p>Income:$<span id="income">0</span></p>
+        <p>Expense:$<span id="expense">0</span></p>
+        <p>Balance:$<span id="balance">0</span></p>
+
+    </div>
+
+    <form id="transactionForm">
+        <select id="type">
+            <option value="income">Income</option>
+            <option value="expense">Expense</option>
+        </select>
+
+        <input type="text" id="category" placeholder="Category" required>
+        <input type="number" id="amount" placeholder="Amount" required>
+        <input type="date" id="date" required>
+
+        <button id="submitBtn" type="submit"> Add transaction</button>
+
+    </form>
+
+    <ul id="transactionList"></ul>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

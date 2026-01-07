@@ -7,6 +7,9 @@ let income = document.getElementById('income')
 let expense = document.getElementById('expense')
 let balance = document.getElementById('balance')
 
+let month = document.getElementById('monthPicker')
+let monthTotal = document.getElementById('monthTotal')
+
 
 form.addEventListener('submit',function(event){
     event.preventDefault()
@@ -19,6 +22,11 @@ form.addEventListener('submit',function(event){
 
     amt = Number(amt)
 
+    if(!category || amt<=0 || !date){
+        alert("Please fill all fields correctly")
+        return
+    }
+
     const transaction={
         id: Date.now(),
         type: type,
@@ -28,6 +36,9 @@ form.addEventListener('submit',function(event){
     }
 
     transactions.push(transaction)
+
+    form.reset()
+
     saveTransactions();
     renderTransactions();
     updateSummary();
@@ -45,6 +56,18 @@ lst.addEventListener("click",function(event){
         updateSummary()
     }
 });
+
+month.addEventListener("change",function(event){
+    selectedMonth = event.target.value
+    let monthlyTotal=0
+    for(let i=0; i<transactions.length;i++){
+        if(transactions[i].type==="expense" && transactions[i].date.startsWith(selectedMonth)){
+            monthlyTotal+=transactions[i].amount
+        }
+    }
+
+    monthTotal.textContent = `Total spent:₹${monthlyTotal}`
+})
 
 function renderTransactions(){
     lst.innerHTML = "";
@@ -104,3 +127,4 @@ function loadTransactions(){
 }
 
 loadTransactions()
+

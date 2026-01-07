@@ -16,6 +16,13 @@ h1{
     letter-spacing: 0.5px;
 }
 
+h2{
+    margin: 30px 0 20px;
+    color: #4b4b6b;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
 .summary {
     display: flex;
     gap: 12px;
@@ -134,4 +141,46 @@ form button:hover {
 #transactionList li span.expense {
     color: #e5989b;   /* pastel coral */
     font-weight: 600;
+}
+
+.month-summary {
+    width: 80%;
+    max-width: 520px;
+    background-color: #fffdf9;
+    padding: 18px 20px;
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    margin-bottom: 25px;
+}
+
+#monthPicker {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid #e0dff0;
+    background-color: #faf9ff;
+    font-size: 14px;
+    color: #4b4b6b;
+}
+
+#monthTotal {
+    margin: 0;
+    padding: 10px 14px;
+    background-color: #d4f1f4; /* pastel mint */
+    color: #4b4b6b;
+    font-weight: 600;
+    border-radius: 14px;
+    white-space: nowrap;
+    margin-left: auto;
+}
+
+.month-summary h2 {
+    margin: 0 0 16px;
+    text-align: center;
+}
+
+.month-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
 }

@@ -10,6 +10,9 @@ let balance = document.getElementById('balance')
 let month = document.getElementById('monthPicker')
 let monthTotal = document.getElementById('monthTotal')
 
+let currentFilter = "all";
+const filterControls = document.querySelector(".filter-controls");
+
 
 form.addEventListener('submit',function(event){
     event.preventDefault()
@@ -48,12 +51,17 @@ form.addEventListener('submit',function(event){
 
 lst.addEventListener("click",function(event){
     if(event.target.tagName==="BUTTON"){
+        let li=event.target.parentElement
         let reqId=Number(event.target.dataset.id)
-        transactions=transactions.filter(t=>t.id!=reqId)
 
-        saveTransactions()
-        renderTransactions()
-        updateSummary()
+        li.classList.add("fade-out")
+
+        setTimeout(()=>{
+            transactions=transactions.filter(t=>t.id!=reqId)
+            saveTransactions()
+            renderTransactions()
+            updateSummary()
+        },250)
     }
 });
 
@@ -69,20 +77,36 @@ month.addEventListener("change",function(event){
     monthTotal.textContent = `Total spent:₹${monthlyTotal}`
 })
 
+
+
+filterControls.addEventListener("click",function(event){
+    if(event.target.tagName!="BUTTON") return
+
+    currentFilter = event.target.dataset.filter
+    updateActiveFilter(event.target)
+    renderTransactions()
+})
+
 function renderTransactions(){
     lst.innerHTML = "";
-    for(let i=0; i<transactions.length; i++){
+    let filteredTransactions = transactions.filter(t=>{
+        if(currentFilter==="all") return true
+        return t.type===currentFilter
+    })
+
+    for(let i=0; i<filteredTransactions.length; i++){
+        let t = filteredTransactions[i]
         let li = document.createElement("li")
         let span = document.createElement("span")
-        span.textContent=`${transactions[i].category}-${transactions[i].amount}`
-        span.className=transactions[i].type
+        span.textContent=`${t.category}-${t.amount}`
+        span.className=t.type
 
         li.appendChild(span)
         
 
         let delBtn = document.createElement("button")
         delBtn.textContent="Delete" 
-        delBtn.dataset.id=transactions[i].id
+        delBtn.dataset.id=t.id
 
         li.appendChild(delBtn)
         lst.appendChild(li)
@@ -125,6 +149,17 @@ function loadTransactions(){
         updateSummary()
     }
 }
+
+function updateActiveFilter(activeBtn) {
+    let buttons = document.querySelectorAll(".filter-controls button")
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove("active")
+    }
+
+    activeBtn.classList.add("active")
+}
+
 
 loadTransactions()
 
